@@ -54,7 +54,3 @@ pub fn mine(last_block &Vlok) &Vlok {
 	return create_block(last_block, data_fnb)
 }
 
-fn init() {
-	// println(rand.string(10))
-	println(lib.miner_addr)
-}

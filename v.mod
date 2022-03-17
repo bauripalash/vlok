@@ -1,7 +1,8 @@
 Module {
-	name: 'vlok'
+	name: 'plockchain'
+    author: 'bauripalash'
 	description: 'Blockchain experiment'
-	version: '0.0.0'
+	version: '0.0.1'
 	license: 'MIT'
 	dependencies: []
 }
