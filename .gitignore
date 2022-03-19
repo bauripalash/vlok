@@ -9,3 +9,5 @@ v.c
 *.dylib
 *.dll
 vls.log
+chaindata.txt
+chaindata.json

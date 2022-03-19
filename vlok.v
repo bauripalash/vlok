@@ -3,7 +3,7 @@ module main
 import lib
 
 const (
-	chain_path = 'chaindata.txt'
+	chain_path = 'chaindata.json'
 )
 
 fn main() {
@@ -18,4 +18,5 @@ fn main() {
 	}
 	// println("Testing blockchain")
 	// println(blockchain.is_valid())
+	blockchain.dumpdata(chain_path) ?
 }

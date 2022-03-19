@@ -2,19 +2,18 @@ module lib
 
 import rand
 import math
-import json
 import time
 
 // Structure of Block Data
 pub struct BlockData {
-	pow         string // proof of work of block
-	transaction string // json formatter Transaction information
+	pow         string      // proof of work of block
+	transaction Transaction // json formatter Transaction information
 }
 
 const miner_addr = rand.uuid_v4() // a random miner address
 
-pub fn create_new_transaction(from string, to string, amount u64) &Transaction {
-	output := &Transaction{
+pub fn create_new_transaction(from string, to string, amount u64) Transaction {
+	output := Transaction{
 		from: from
 		to: to
 		amount: amount
@@ -38,18 +37,18 @@ pub fn po_work(last string) u64 {
 }
 
 pub fn mine(last_block &Vlok) &Vlok {
-	last_block_data := json.decode(BlockData, last_block.data) or {
-		eprintln('No proof of work present in block $last_block.index')
-		exit(1)
-	}
+	last_block_data := last_block.data
 
 	pow_for_new_block := po_work(last_block_data.pow).str() // proof of work for new block
 	block_transcation := create_new_transaction('galaxy', lib.miner_addr, 1) // block reward for the miner from 'galaxy' aka. network
+
+	// Structural data to be converted to json
 	raw_data_for_new_block := &BlockData{
 		pow: pow_for_new_block
-		transaction: json.encode(block_transcation)
-	} // data for new block
-	data_fnb := json.encode(raw_data_for_new_block)
+		transaction: block_transcation
+	}
+
+	// json data for new block
 	time.sleep(time.second)
-	return create_block(last_block, data_fnb)
+	return create_block(last_block, raw_data_for_new_block)
 }

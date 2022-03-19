@@ -1,15 +1,14 @@
 module lib
 
 import time
-import json
 import crypto.sha256
 
 pub struct Vlok {
 mut:
-	index     int    [required]
+	index     int       [required]
 	timestamp i64
-	data      string [required]
-	prev_hash string [required]
+	data      BlockData [required]
+	prev_hash string    [required]
 	self_hash string
 }
 
@@ -26,12 +25,13 @@ pub fn (v Vlok) to_string() string {
 }
 
 pub fn (v Vlok) is_valid_pow() bool {
+	/*
 	block_data := json.decode(BlockData, v.data) or {
 		eprintln('error decoding block data')
 		return false
-	}
+	}*/
 
-	pow := block_data.pow.u64()
+	pow := v.data.pow.u64()
 	if pow % 2 != 0 || pow % 5 != 0 {
 		return false
 	}
@@ -39,7 +39,7 @@ pub fn (v Vlok) is_valid_pow() bool {
 }
 
 // Create a new block on the heap
-pub fn new_vlok(index int, data string, prev_hash string) &Vlok {
+pub fn new_vlok(index int, data BlockData, prev_hash string) &Vlok {
 	mut vlok_ := &Vlok{
 		index: index
 		timestamp: time.utc().unix
@@ -55,12 +55,19 @@ pub fn new_vlok(index int, data string, prev_hash string) &Vlok {
 
 // genesis block creation
 pub fn create_genesis() Vlok {
-	return *new_vlok(0, '0', '0')
+	return *new_vlok(0, BlockData{
+		pow: ''
+		transaction: Transaction{
+			from: ''
+			to: ''
+			amount: 0
+		}
+	}, '0')
 }
 
 // takes the previous block and returns new block;
 // this function creates a new block; previous block is necessary here
-pub fn create_block(prev &Vlok, data string) &Vlok {
+pub fn create_block(prev &Vlok, data BlockData) &Vlok {
 	nv := new_vlok(prev.index + 1, data, prev.self_hash)
 	return nv
 }

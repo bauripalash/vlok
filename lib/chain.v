@@ -1,5 +1,8 @@
 module lib
 
+import json
+import os
+
 pub struct Pchain {
 pub mut:
 	blocks []Vlok
@@ -36,4 +39,8 @@ pub fn (p Pchain) is_valid() bool {
 		}
 	}
 	return true
+}
+
+pub fn (p Pchain) dumpdata(path string) ? {
+	os.write_file(path, json.encode_pretty(p)) ?
 }
