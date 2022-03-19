@@ -36,8 +36,8 @@ pub fn new_vlok(index int, data string, prev_hash string) &Vlok {
 }
 
 // genesis block creation
-pub fn create_genesis() &Vlok {
-	return new_vlok(0, '0', '0')
+pub fn create_genesis() Vlok {
+	return *new_vlok(0, '0', '0')
 }
 
 // takes the previous block and returns new block;

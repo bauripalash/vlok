@@ -2,13 +2,19 @@ module main
 
 import lib
 import time
+const (
+	chain_path = "chaindata.txt"
+)
 
 fn main() {
-	genesis := lib.new_vlok(0, '0', '0')
-	mut chain := [genesis]
-	for i := 1; i <= 10; i += 1 {
-		chain << lib.mine(chain[chain.len - 1])
+	mut blockchain := lib.Pchain{blocks: [lib.create_genesis()] , length:1}
 
-		time.sleep(i * time.second) // If it doesn't sleep; most of the blocks will have the same time-stamp
+	for i in 1..5{
+		
+		blockchain.push(lib.mine(blockchain.lastblock()))
+		time.sleep(1*time.second) //without sleep; all block would have same timestamp
+
 	}
+
+	println(blockchain)
 }

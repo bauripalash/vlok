@@ -47,21 +47,26 @@ pub fn (mut s Server) index() vweb.Result{
 [post]
 pub fn (mut s Server) send() ?vweb.Result{
 	
-	
-	trans := json.decode(Transaction , s.req.data)?
-	if s.req.header.get(.content_type)?.str() == "application/json"{
-		return s.json_pretty(JsonRes{status:200, message:"done!"})
+	println(s.req.data)	
+	trans := json.decode(Transaction , s.req.data) or {
+		eprintln("invalid json request")
+		return s.json("invalid request")
 	}
-
-	return s.text("poo!")
+	//println(trans)
+	//if s.req.header.get(.content_type)?.str() == "application/json"{
+	//	return s.text("done")
+	//}
+	
+	return s.json(trans)
 
 }
 
 
-
+/*
 fn init(){
 	
 	println("Starting blockchain server at http://127.0.0.1:$port")
 	vweb.run(&Server{}, port)
 
 }
+*/
