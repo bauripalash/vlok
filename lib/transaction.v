@@ -1,6 +1,6 @@
 module lib
 
-//Transaction structure of block data
+// Transaction structure of block data
 pub struct Transaction {
 pub mut:
 	from   string

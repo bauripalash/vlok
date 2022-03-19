@@ -1,7 +1,5 @@
 # Vlok
+>  A simple blockchain experiment with the V language.
+> Live test : [![CI](https://github.com/bauripalash/vlok/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/bauripalash/vlok/actions/workflows/main.yml)
 
-Live test : [![CI](https://github.com/bauripalash/vlok/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/bauripalash/vlok/actions/workflows/main.yml)
-
-A simple blockchain experiment with the V language.
-
-For now, the basic block structure and mining is working
+This blockchain experiment might not be similar to any preexisting blockchain 'technology'. I am building my own thing here.

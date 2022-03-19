@@ -1,6 +1,7 @@
 module lib
 
 import time
+import json
 import crypto.sha256
 
 pub struct Vlok {
@@ -16,8 +17,25 @@ fn (mut v Vlok) set_hash() {
 	v.self_hash = sha256.hexhash(v.to_string())
 }
 
+fn (v Vlok) get_hash() string {
+	return v.self_hash
+}
+
 pub fn (v Vlok) to_string() string {
 	return 'VLOK[index: $v.index; timestamp: $v.timestamp; data: $v.data; prev_hash: $v.prev_hash; self: $v.self_hash]'
+}
+
+pub fn (v Vlok) is_valid_pow() bool {
+	block_data := json.decode(BlockData, v.data) or {
+		eprintln('error decoding block data')
+		return false
+	}
+
+	pow := block_data.pow.u64()
+	if pow % 2 != 0 || pow % 5 != 0 {
+		return false
+	}
+	return true
 }
 
 // Create a new block on the heap
