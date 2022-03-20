@@ -20,7 +20,7 @@ fn main() {
 		length: 1
 	}
 
-	sh := go start_server(&blockchain)
+	//sh := go start_server(&blockchain)
 	for _ in 1 .. 5 {
 		mined_block := lib.mine(blockchain.lastblock())
 		blockchain.push(mined_block)
@@ -36,5 +36,5 @@ fn main() {
 
 	blockchain.chain_merge(new_chain)
 
-	sh.wait()?
+	//sh.wait()?
 }
