@@ -24,6 +24,48 @@ pub fn (v Vlok) to_string() string {
 	return 'VLOK[index: $v.index; timestamp: $v.timestamp; data: $v.data; prev_hash: $v.prev_hash; self: $v.self_hash]'
 }
 
+pub fn (v Vlok) is_same(x Vlok) bool{
+	
+	if v.index != x.index{
+		return false
+	}
+
+	if v.timestamp != x.timestamp{
+		
+		return false
+
+	}
+
+	if v.prev_hash != x.prev_hash{
+		return false
+	}
+
+	if v.self_hash != x.self_hash{
+		return false
+	}
+
+	if v.data.pow != x.data.pow{
+		return false
+	}
+
+	if v.data.transaction.from != x.data.transaction.from{
+		return false
+	}
+
+	if v.data.transaction.to != x.data.transaction.to{
+		return false
+	}
+
+	if v.data.transaction.amount != x.data.transaction.amount {
+		return false
+	}
+
+
+
+	return true
+
+}
+
 pub fn (v Vlok) is_valid_pow() bool {
 	/*
 	block_data := json.decode(BlockData, v.data) or {
@@ -49,7 +91,7 @@ pub fn new_vlok(index int, data BlockData, prev_hash string) &Vlok {
 
 	vlok_.set_hash()
 
-	println('Block #$index =>\n$vlok_.to_string()')
+	//println('Block #$index =>\n$vlok_.to_string()')
 	return vlok_
 }
 

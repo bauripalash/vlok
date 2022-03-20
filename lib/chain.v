@@ -9,9 +9,71 @@ pub mut:
 	length u64
 }
 
-pub fn (mut p Pchain) push(v Vlok) {
+pub fn (mut p Pchain) push(v Vlok) bool {
+	if v.is_valid_pow(){
+		p.blocks << v
+		p.length += 1
+		return true
+	}
+	return false
+}
+
+pub fn (mut p Pchain) blind_push(v Vlok){
+	
 	p.blocks << v
 	p.length += 1
+
+}
+
+pub fn (mut p Pchain) chain_merge(q Pchain) bool{
+	
+	if !q.is_valid(){
+		eprintln("submitted Chain is invalid!")
+		return false
+	}
+
+	if !p.is_valid(){ //I don't think it is necessary
+		eprintln("Chain of this node seems to be invalid")
+		return false
+	}
+
+	if p.length >= q.length {
+		println("No need to merge the submitted chain!")
+		return false
+	}
+
+
+	
+	//if we are still in the Function; `q` is the longer chain here; `p` is shorter one
+	// and `p` and `q` both are valid (possibly)
+	
+	for i in 0..p.length-1{ // checking if all the block till P[L] and Q[L] are same; where L is the length of the shortest chain (in this case `p`)
+		
+		if !p.blocks[i].is_same(q.blocks[i]){
+			eprintln("Merge Failed -> While checking if the blocks are same!")
+			return false
+		}
+
+	}
+
+	// if we are still here; that means it is `probally` okay to merge extra blocks from Q
+
+	for j in p.length-1..q.length-1{
+		if !p.push(q.blocks[j]){
+			eprintln("Merge Failed -> While pushing blocks!")
+			return false
+		}
+	}
+		
+	
+
+	
+	println("Merge Done!")	
+	return true
+
+
+
+
 }
 
 pub fn (p Pchain) lastblock() &Vlok {
