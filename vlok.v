@@ -7,6 +7,7 @@ const (
 )
 
 fn main() {
+	println("Chain -> P")
 	mut blockchain := lib.Pchain{
 		blocks: [lib.create_genesis()]
 		length: 1
@@ -17,14 +18,20 @@ fn main() {
 		blockchain.push(mined_block)
 	}
 
+	println("Chain -> P <- END")
+	println("Chain -> Q")
 	mut new_chain := blockchain
-	println(new_chain.lastblock())
-	new_chain.blind_push(lib.mine(new_chain.lastblock()))
-	println(new_chain.is_valid())
+	//println(new_chain.lastblock())
+	new_mine := lib.mine(new_chain.lastblock())
+	//println(new_mine)
+	new_chain.push(new_mine)
+	//println(blockchain)
+
+	println("Chain -> Q <- END")
 
 	blockchain.chain_merge(new_chain)
 
-	println(new_chain)
+	//println(blockchain)
 	//println(new_chain)
 
 	//println(blockchain.blocks[2].is_same(blockchain.blocks[1]))

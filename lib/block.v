@@ -91,7 +91,7 @@ pub fn new_vlok(index int, data BlockData, prev_hash string) &Vlok {
 
 	vlok_.set_hash()
 
-	//println('Block #$index =>\n$vlok_.to_string()')
+	println('Block #$index =>\n$vlok_.to_string()')
 	return vlok_
 }
 

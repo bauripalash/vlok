@@ -9,7 +9,7 @@ pub mut:
 	length u64
 }
 
-pub fn (mut p Pchain) push(v Vlok) bool {
+pub fn (mut p Pchain) validated_push(v Vlok) bool {
 	if v.is_valid_pow(){
 		p.blocks << v
 		p.length += 1
@@ -18,7 +18,7 @@ pub fn (mut p Pchain) push(v Vlok) bool {
 	return false
 }
 
-pub fn (mut p Pchain) blind_push(v Vlok){
+pub fn (mut p Pchain) push(v Vlok){
 	
 	p.blocks << v
 	p.length += 1
@@ -58,11 +58,12 @@ pub fn (mut p Pchain) chain_merge(q Pchain) bool{
 
 	// if we are still here; that means it is `probally` okay to merge extra blocks from Q
 
-	for j in p.length-1..q.length-1{
-		if !p.push(q.blocks[j]){
-			eprintln("Merge Failed -> While pushing blocks!")
-			return false
-		}
+	for j in p.length..q.length{
+		//println(q.blocks[j])
+		p.push(q.blocks[j])
+		//	eprintln("Merge Failed -> While pushing blocks!")
+		//	return false
+		//}
 	}
 		
 	
