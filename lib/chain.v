@@ -25,6 +25,26 @@ pub fn (mut p Pchain) push(v Vlok){
 
 }
 
+pub fn (p Pchain) balance_of(a string) u64{
+	mut balance := u64(0)
+		
+		for block in p.blocks{
+			if block.data.transaction.to == a{
+				balance += block.data.transaction.amount
+			}
+
+			if block.data.transaction.from == a{
+				balance -= block.data.transaction.amount
+			}
+		}
+
+
+	return balance
+
+	
+
+}
+
 pub fn (mut p Pchain) chain_merge(q Pchain) bool{
 	
 	if !q.is_valid(){

@@ -49,6 +49,8 @@ pub fn mine(last_block &Vlok) &Vlok {
 	}
 
 	// json data for new block
-	time.sleep(time.second)
-	return create_block(last_block, raw_data_for_new_block)
+	nb := create_block(last_block, raw_data_for_new_block)
+
+	time.sleep(nb.index * time.second)
+	return nb
 }
